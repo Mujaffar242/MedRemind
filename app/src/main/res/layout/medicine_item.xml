@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="scheduleModel"
+            type="com.mujaffar.medremind.database.DatabaseTaskModel" />
+        <variable
+            name="markCompleteListner"
+            type="com.mujaffar.medremind.MarklCompleteListner" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/medicine"
+            android:id="@+id/medcineIcon"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/completedIcon"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@id/medcineIcon">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:text="Paracemal"
+                    android:text="@{scheduleModel.genericName}"
+                    android:id="@+id/genericName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="100 mg"
+                    android:textSize="10sp"
+                    android:id="@+id/quantiy"
+                    app:setQuantity="@{scheduleModel}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/genericName"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="After Food"
+                    android:textSize="10sp"
+                    android:drawableStart="@drawable/foodcontext"
+                    android:drawablePadding="5dp"
+                    android:id="@+id/foodContext"
+                    app:hideShowFoodContext="@{scheduleModel}"
+                    android:text="@{scheduleModel.foodContext}"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/quantiy"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Take"
+                    app:hideShowFoodContext="@{scheduleModel}"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/takeButton"
+                    android:onClick="@{()->markCompleteListner.markComplete(scheduleModel)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/quantiy"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/iconcompleted"
+            android:visibility="gone"
+            app:showOnCompleted="@{scheduleModel}"
+            android:id="@+id/completedIcon"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
